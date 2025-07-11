@@ -11,4 +11,9 @@ const connectDB = async () => {
   }
 };
 
+//vencimiento del token
+process.env.TOKEN_EXPIRATION = '2h';
+process.env.SEED_AUTENTICACION = process.env.SEED_AUTENTICACION ||'este-es-el-seed-desarrollo';
+
+
 export default connectDB;

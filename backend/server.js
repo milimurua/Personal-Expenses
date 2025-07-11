@@ -1,9 +1,12 @@
 import connectDB from './config/config.js';   
-//import route from './routes/index.js'; 
+import route from './routes/index.js'; 
+
 import express from 'express';
 const app = express();
+
 import dotenv from 'dotenv';
 dotenv.config();
+
 const PORT = process.env.PORT;
 import bodyParser from 'body-parser';
 
@@ -12,7 +15,7 @@ import bodyParser from 'body-parser';
 * protocolo http(body-parse)
 */
 app.use(bodyParser.json());
-//app.use(route) //configuración de las rutas
+app.use(route) //configuración de las rutas
 
 connectDB();
 
