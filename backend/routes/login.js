@@ -5,50 +5,49 @@ import User from "../models/user.js";
 
 const app = Router();
 
-app.post('/login', (req, res) => {
+app.post('/', async (req, res) => {
     let body = req.body;
 
-    User.findOne({ email: bodyParser.email}, (error, userDb => {
-        if(error){
-            return res.status(500).json({
-                ok: false,
-                error: error
-            })
-        }
+    try {
+        const userDb = await User.findOne({ email: body.email });
 
-        //verifica si el usuario o contraseña existe
-        if(!userDb){
+        if (!userDb) {
             return res.status(400).json({
                 ok: false,
-                error:{
+                error: {
                     message: 'Incorrect email or password'
                 }
-            })
+            });
         }
 
         //valida si la contaseña coincide con base de datos
-        if(!bcrypt.compareSync(body.password, userDb.password)){
+        if (!bcrypt.compareSync(body.password, userDb.password)) {
             return res.status(400).json({
                 ok: false,
-                error:{
+                error: {
                     message: 'Incorrect email or password'
                 }
-            })
+            });
         }
 
         //genera el token de autenticación
-        let token = jwt.sing({
-            user: userDb,
-        }, process.env.SEED_AUTENTICACION,{
-            expireIn: process.env.TOKEN_EXPIRATION
-        })
+        let token = jwt.sign(
+            { user: userDb },
+            process.env.SEED_AUTENTICACION,
+            { expiresIn: process.env.TOKEN_EXPIRATION }
+        );
 
         res.json({
             ok: true,
             user: userDb,
             token
-        })
-    }))
+        });
+    } catch (error) {
+        return res.status(500).json({
+            ok: false,
+            error: error.message
+        });
+    }
 });
 
 export default app;

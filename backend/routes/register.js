@@ -33,6 +33,8 @@ router.post('/', async (req, res) => {
 
     // Guarda el usuario
     await user.save();
+    console.log('saved the user:', user);
+    console.log('Colección de usuarios:', User.collection.name);
 
     // Devuelve el usuario sin la contraseña
     const userToReturn = user.toObject();

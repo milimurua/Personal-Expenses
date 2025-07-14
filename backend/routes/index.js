@@ -4,7 +4,7 @@ import registerRoute from './register.js';
 
 const router = Router();
 
-router.use('./login', logingRoute);
-router.use('./register', registerRoute);
+router.use('/register', registerRoute);
+router.use('/login', logingRoute);
 
 export default router;

@@ -1,19 +1,19 @@
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+dotenv.config();
 
-//conexión a la base de datos
+const uri = process.env.MONGODB_URI;
+
+console.log('Conectando a MongoDB en:', uri);
+
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
-    console.log('MongoDB connected');
+    await mongoose.connect(uri);
+    console.log('Conexión exitosa a MongoDB');
+    console.log('Base de datos actual:', mongoose.connection.name);
   } catch (error) {
-    console.error('Error connecting to mongodb:', error.message);
-    process.exit(1);
+    console.error('Error al conectar a MongoDB:', error.message);
   }
 };
-
-//vencimiento del token
-process.env.TOKEN_EXPIRATION = '2h';
-process.env.SEED_AUTENTICACION = process.env.SEED_AUTENTICACION ||'este-es-el-seed-desarrollo';
-
 
 export default connectDB;

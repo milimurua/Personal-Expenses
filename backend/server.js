@@ -1,5 +1,5 @@
 import connectDB from './config/config.js';   
-import route from './routes/index.js'; 
+import routesIndex from './routes/index.js'; 
 
 import express from 'express';
 const app = express();
@@ -15,15 +15,14 @@ import bodyParser from 'body-parser';
 * protocolo http(body-parse)
 */
 app.use(bodyParser.json());
-app.use(route) //configuración de las rutas
+app.use('/', routesIndex); //configuración de las rutas
 
 connectDB();
 
 app.get('/', (_req, res) => {
-    res.json({message: "Welcome to the app"})
+    res.json({message: "Welcome to the app"});
 });
 
 app.listen(PORT, () => {
     console.log(`Listen to the port ${PORT}`);
 });
-
