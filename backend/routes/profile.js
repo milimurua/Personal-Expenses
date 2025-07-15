@@ -1,11 +1,16 @@
 import { Router } from 'express';
-import authMiddleware from '../middleware/auth.js';
+import passport from '../config/passport.js';
 
 const router = Router();
 
-router.get('/', authMiddleware, (req, res) => {
-  // req.user estará disponible si el token es válido
-  res.json({ ok: true, user: req.user});
-});
+router.get(
+  '/',
+  (req, res, next) => { console.log('Llega a /profile'); next(); },
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    console.log('Autenticado, req.user:', req.user);
+    res.json({ ok: true, user: req.user });
+  }
+);
 
 export default router;

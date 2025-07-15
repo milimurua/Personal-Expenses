@@ -32,7 +32,7 @@ app.post('/', async (req, res) => {
 
         //genera el token de autenticación
         let token = jwt.sign(
-            { user: userDb },
+            { id: userDb._id },
             process.env.SEED_AUTENTICACION,
             { expiresIn: process.env.TOKEN_EXPIRATION }
         );

@@ -1,4 +1,5 @@
-import connectDB from './config/config.js';   
+import connectDB from './config/config.js';  
+import passport from './config/passport.js'; 
 import routesIndex from './routes/index.js'; 
 
 import express from 'express';
@@ -9,6 +10,8 @@ dotenv.config();
 
 const PORT = process.env.PORT;
 import bodyParser from 'body-parser';
+
+app.use(passport.initialize());
 
 /**
 * Middleware que parsea los datos que recibimos a través del 
