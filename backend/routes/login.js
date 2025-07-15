@@ -37,11 +37,21 @@ app.post('/', async (req, res) => {
             { expiresIn: process.env.TOKEN_EXPIRATION }
         );
 
+        let refreshToken = jwt.sign(
+            { id: userDb._id },
+            process.env.SEED_REFRESH, // Usa una semilla diferente para el refresh
+            { expiresIn: process.env.REFRESH_TOKEN || '3m' }
+        );
+
         res.json({
             ok: true,
             user: userDb,
-            token
+            token,
+            refreshToken
         });
+        
+        await User.findByIdAndUpdate(userDb._id, { refreshToken });
+
     } catch (error) {
         return res.status(500).json({
             ok: false,

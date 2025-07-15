@@ -24,7 +24,11 @@ const userSchema = new mongoose.Schema({
         default: 'User',
         required: [true, 'role is required'],
         enum: roles
-    }
+    },
+    refreshToken: {
+        type: String,
+        default: null,
+    },
 });
 
 userSchema.methods.toJSON = function() {
