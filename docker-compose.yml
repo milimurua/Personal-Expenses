@@ -1,0 +1,44 @@
+version: "3.3"
+
+services:
+  mongo:
+    image: mongo:6.0.25-jammy
+    container_name: expenses_mongo
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
+    healthcheck:
+      test: ["CMD-SHELL", "mongo --eval \"db.adminCommand('ping')\""]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - expenses_network
+
+  app:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: expenses_backend
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    depends_on:
+      - mongo
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./backend/.env:/app/.env
+    networks:
+      - expenses_network
+
+volumes:
+  mongo_data:
+
+networks:
+  expenses_network:
+    driver: bridge
