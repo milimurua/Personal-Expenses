@@ -9,7 +9,7 @@ import User from '../models/user.js';
 
 const opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: process.env.SEED_AUTENTICACION,
+  secretOrKey: process.env.SEED_AUTENTICACION
 };
 
 passport.use(new Strategy(opts, async (jwt_payload, done) => {

@@ -5,14 +5,13 @@ FROM node:22.17-alpine
 RUN apk add --no-cache curl
 
 # Directorio en el que se trabaja
-WORKDIR /app
+WORKDIR /login
 
 # Copia package.json y package-lock.json
 COPY package*.json ./
 
 # Instala dependencias
 RUN npm install
-RUN npm install -g nodemon
 
 # Copia los archivos de código
 COPY . .

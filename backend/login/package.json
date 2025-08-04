@@ -2,10 +2,11 @@
   "name": "backend",
   "version": "1.0.0",
   "type": "module",
-  "main": "login/server.js",
+  "main": "server.js",
   "scripts": {
-    "test": "j node login/server.js",
-    "dev": "nodemon login/server.js"
+    "test": "j node server.js",
+    "dev": "nodemon server.js",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
